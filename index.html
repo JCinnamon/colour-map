@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Earth Colours — A Colour Map and Palette Generator</title>
+<title>Earth Colours — A Colour Map and Earth Palette Generator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -30,7 +30,8 @@ header{height:var(--hh);flex-shrink:0;padding:0 18px;display:flex;align-items:ce
 header h1{font-family:'IM Fell English SC',serif;font-size:20px;font-weight:400;letter-spacing:.02em;color:var(--ink)}
 .h-tag{font-size:15px;color:var(--ink-mid);font-style:italic}
 .h-pal-group{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.h-spacer{flex:1}
+.h-spacer-l{flex:1.5}
+.h-spacer-r{flex:1}
 .h-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .btn{background:none;border:.5px solid var(--border-strong);border-radius:4px;color:var(--ink-mid);cursor:pointer;font-size:13px;padding:4px 9px;font-family:'Crimson Pro',serif;transition:all .12s;white-space:nowrap}
 .btn:hover{color:var(--rust);border-color:var(--rust)}
@@ -145,8 +146,9 @@ tbody tr:hover .add-pal{display:inline-block}
 .pal-btn.primary{background:var(--rust);color:#fff;border-color:var(--rust)}
 .pal-btn.primary:hover{opacity:.88}
 .pal-btn:disabled{opacity:.35;cursor:default;pointer-events:none}
-.pal-grip{font-size:9px;color:rgba(128,128,128,.5);cursor:grab;line-height:1;margin-bottom:2px;user-select:none}
-.pal-grip:active{cursor:grabbing}
+.pal-grip{width:38px;height:8px;cursor:grab;user-select:none;flex-shrink:0;margin-bottom:3px;border-radius:2px;background:repeating-linear-gradient(90deg,var(--ink-mid) 0,var(--ink-mid) 2px,transparent 2px,transparent 5px);opacity:.45;transition:opacity .12s}
+.pal-grip:hover{opacity:.8}
+.pal-grip:active{cursor:grabbing;opacity:1}
 .pal-chip-drop-left{border-left:2px solid var(--rust)!important}
 .pal-chip-drop-right{border-right:2px solid var(--rust)!important}
 
@@ -207,6 +209,9 @@ tbody tr:hover .add-pal{display:inline-block}
   body{overflow:auto}
 }
 
+/* ── TOOLTIP ── */
+#tt{position:fixed;z-index:9999;background:var(--ink);color:var(--bg);font-size:12px;font-family:'Crimson Pro',Georgia,serif;padding:5px 10px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity .12s;max-width:230px;line-height:1.45;text-align:center;white-space:normal;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+
 /* ── PRINT ── */
 @media print{
   *{transition:none!important;overflow:visible!important}
@@ -238,14 +243,14 @@ tbody tr:hover .add-pal{display:inline-block}
 <header>
   <div class="h-left">
     <h1>Earth Colours</h1>
-    <span class="h-tag">An interactive colour map and Earth palette generator</span>
+    <span class="h-tag">An interactive map of geographic colours + cartographic palette generator</span>
   </div>
+  <div class="h-spacer-l"></div>
   <div class="h-pal-group">
     <button class="btn" id="palBtn" onclick="togglePalette()">&#x25A3; Create Earth Colour Palette</button>
     <button class="btn" onclick="toggleHelp()" id="helpBtn">Instructions</button>
   </div>
-  <span style="font-size:12px;color:var(--ink-light);font-family:'JetBrains Mono',monospace;flex-shrink:0" id="hcnt"></span>
-  <div class="h-spacer"></div>
+  <div class="h-spacer-r"></div>
   <div class="h-right">
     <button class="btn" onclick="exportCSV()" title="Export current view as CSV">&#x2193; CSV</button>
     <button class="btn" onclick="toggleTheme()" id="themeBtn">&#x25D1; Dark</button>
@@ -270,18 +275,20 @@ tbody tr:hover .add-pal{display:inline-block}
   <span class="chip" id="chip-val" onclick="setSrt('v',-1)">Brightness</span>
   <span class="chip" id="chip-la" onclick="setSrt('la',1)">N&#x2192;S</span>
   <span class="chip" id="chip-lo" onclick="setSrt('lo',1)">W&#x2192;E</span>
+  <div class="div"></div>
+  <span style="font-size:12px;color:var(--ink-light);font-family:'JetBrains Mono',monospace;white-space:nowrap;flex-shrink:0" id="hcnt"></span>
 </div>
 
 <!-- HELP DRAWER -->
 <div class="help-drawer" id="helpDrawer">
   <div class="help-inner">
     <div>
-      <div class="hi-title">Building a Palette</div>
+      <div class="hi-title">Create an Earth Colour Palette</div>
       <p class="hi-text">Hover any table row and click <strong>+</strong> to add a colour. Or click a map marker, then use <strong>+ Add to palette</strong> in the info panel. The tray opens automatically along the bottom of the screen.<br><br>Drag chips to reorder. Use the <strong>Sort</strong> buttons to arrange by hue, saturation, brightness, or luminance. Hover a chip to reveal the <strong>&times;</strong> remove button. <strong>Clear</strong> empties the palette.</p>
     </div>
     <div>
-      <div class="hi-title">Colour Ramp Generator</div>
-      <p class="hi-text">Add at least <strong>2 colours</strong> to the palette — a ramp preview appears on the right side of the tray. The ramp interpolates through <strong>CIELAB colour space</strong>, which matches human perception better than RGB for cartographic gradients.<br><br>Choose 3–11 steps. Export as <strong>Hex/CSV</strong> for any software, <strong>PNG strip</strong> for image use, <strong>QGIS XML</strong> to import directly as a QGIS colour ramp, or <strong>CSS gradient</strong> for web maps.</p>
+      <div class="hi-title">Cartographic Colour Ramp Generator</div>
+      <p class="hi-text">Add at least <strong>2 colours</strong> to the palette — a ramp preview appears on the right side of the tray. The ramp interpolates through <strong>CIELAB colour space</strong>, which matches human perception better than RGB for cartographic gradients.<br><br>Choose 3–11 steps. Export as <strong>Hex/RGB/HSVCSV</strong> for any software, <strong>PNG strip</strong> for image use, <strong>QGIS XML</strong> to import directly as a QGIS colour ramp, or <strong>CSS gradient</strong> for web maps.</p>
     </div>
     <div>
       <div class="hi-title">Table &amp; Filtering</div>
@@ -336,17 +343,17 @@ tbody tr:hover .add-pal{display:inline-block}
         <div class="pal-row-div"></div>
         <span class="pal-count" id="palCount"></span>
         <span class="pal-warn" id="palWarn"></span>
-        <button class="pal-btn" onclick="clearPalette()">Clear</button>
-        <button class="pal-btn" onclick="exportPaletteCSV()" id="palCSVBtn" disabled>&#x2193; CSV</button>
-        <button class="pal-btn" onclick="downloadPNG()" id="palPNGBtn" disabled>&#x2193; PNG strip</button>
-        <button class="pal-btn primary" id="palTinBtn" onclick="openTineye()" disabled>Palette image search MultiColr &#x2197;</button>
+        <button class="pal-btn" onclick="clearPalette()" data-tip="Remove all colours from the palette">Clear</button>
+        <button class="pal-btn" onclick="exportPaletteCSV()" id="palCSVBtn" disabled data-tip="Export hex/RGB/HSV values">&#x2193; CSV</button>
+        <button class="pal-btn" onclick="downloadPNG()" id="palPNGBtn" disabled data-tip="Download as PNG colour strip">&#x2193; PNG</button>
+        <button class="pal-btn primary" id="palTinBtn" onclick="openTineye()" disabled data-tip="Search for images matching palette on TinEye MultiColr (max 5)">Palette Flickr image search &#x2197;</button>
       </div>
     </div>
     <!-- RIGHT: colour ramp (visible when palette ≥ 2 colours) -->
     <div id="rampCol" style="display:none">
       <div class="ramp-top-row">
         <span class="pal-sort-label">Colour ramp (LAB):</span>
-        <select id="rampSteps" class="ramp-steps-sel" onchange="updateRamp()">
+        <select id="rampSteps" class="ramp-steps-sel" onchange="updateRamp()" data-tip="Number of colour classes in the ramp — LAB-interpolated between palette colours in order">
           <option value="3">3 classes</option>
           <option value="5">5 classes</option>
           <option value="7" selected>7 classes</option>
@@ -357,10 +364,10 @@ tbody tr:hover .add-pal{display:inline-block}
       </div>
       <canvas id="rampCanvas"></canvas>
       <div class="ramp-export-row">
-        <button class="pal-btn" onclick="exportRampCSV()">&#x2193; CSV</button>
-        <button class="pal-btn" onclick="downloadRampPNG()">&#x2193; PNG</button>
-        <button class="pal-btn" onclick="exportRampQGIS()">&#x2193; QGIS XML</button>
-        <button class="pal-btn" onclick="exportRampCSS()">&#x2193; CSS</button>
+        <button class="pal-btn" onclick="exportRampCSV()" data-tip="Download ramp steps as CSV — includes hex, R, G, B, H°, S%, V% for each step">&#x2193; CSV</button>
+        <button class="pal-btn" onclick="downloadRampPNG()" data-tip="Download as labelled PNG strip">&#x2193; PNG</button>
+        <button class="pal-btn" onclick="exportRampQGIS()" data-tip="Export as QGIS gradient XML">&#x2193; QGIS XML</button>
+        <button class="pal-btn" onclick="exportRampCSS()" data-tip="Export as a CSS linear-gradient">&#x2193; CSS</button>
       </div>
     </div>
   </div>
@@ -664,7 +671,7 @@ function toggleHelp(){
   document.getElementById('helpDrawer').classList.toggle('open',helpOpen);
   const btn=document.getElementById('helpBtn');
   btn.classList.toggle('active',helpOpen);
-  btn.textContent=helpOpen?'\u00D7 Close help':'? How to use';
+  btn.textContent=helpOpen?'\u00D7 Close help':'Instructions';
   setTimeout(()=>map.invalidateSize(),350);
 }
 
@@ -979,8 +986,7 @@ function renderPalette(){
 
     const grip=document.createElement('div');
     grip.className='pal-grip';
-    grip.innerHTML='&#x2807;&#x2807;';
-    grip.title='Drag to reorder';
+    grip.setAttribute('data-tip','Drag to reorder');
 
     const chip=document.createElement('div');
     chip.style.cssText='width:38px;height:38px;border-radius:4px;border:.5px solid rgba(0,0,0,.18);background:'+p.hex+';position:relative';
@@ -1133,6 +1139,39 @@ function exportRampCSS(){
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([css],{type:'text/css'}));
   a.download='colour-ramp.css';a.click();URL.revokeObjectURL(a.href);
 }
+/* ── TOOLTIP ── */
+(function(){
+  const tt=document.createElement('div');
+  tt.id='tt';
+  document.body.appendChild(tt);
+  let hideTimer;
+  function pos(el){
+    clearTimeout(hideTimer);
+    tt.textContent=el.dataset.tip;
+    tt.style.opacity='0';
+    tt.style.left='-9999px';
+    requestAnimationFrame(()=>{
+      const r=el.getBoundingClientRect(),tw=tt.offsetWidth,th=tt.offsetHeight;
+      let left=r.left+r.width/2-tw/2;
+      let top=r.top-th-7;
+      if(top<4)top=r.bottom+7;
+      left=Math.max(4,Math.min(left,window.innerWidth-tw-4));
+      tt.style.left=left+'px';tt.style.top=top+'px';
+      tt.style.opacity='1';
+    });
+  }
+  document.addEventListener('mouseover',e=>{
+    const el=e.target.closest('[data-tip]');
+    if(el)pos(el); else{clearTimeout(hideTimer);hideTimer=setTimeout(()=>tt.style.opacity='0',80);}
+  });
+  document.addEventListener('mouseout',e=>{
+    if(!e.relatedTarget||!e.relatedTarget.closest('[data-tip]')){
+      clearTimeout(hideTimer);hideTimer=setTimeout(()=>tt.style.opacity='0',80);
+    }
+  });
+  document.addEventListener('click',()=>{tt.style.opacity='0';});
+})();
+
 /* ── INIT ── */
 try{if(localStorage.getItem('gc-theme')==='dark')toggleTheme();}catch(e){}
 go();
