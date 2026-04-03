@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Colours of the World — A Colour Map</title>
+<title>Earth Colours — A Colour Map and Palette Generator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -25,11 +25,13 @@ html,body{height:100%;overflow:hidden}
 body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;transition:background .2s,color .2s}
 
 /* ── HEADER ── */
-header{height:var(--hh);flex-shrink:0;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border-strong);background:var(--bg);position:relative;z-index:300}
-.h-left{display:flex;align-items:baseline;gap:12px}
-header h1{font-family:'IM Fell English SC',serif;font-size:18px;font-weight:400;letter-spacing:.02em;color:var(--ink)}
-.h-tag{font-size:14px;color:var(--ink-mid);font-style:italic}
-.h-right{display:flex;align-items:center;gap:6px}
+header{height:var(--hh);flex-shrink:0;padding:0 18px;display:flex;align-items:center;gap:8px;justify-content:flex-start;border-bottom:1px solid var(--border-strong);background:var(--bg);position:relative;z-index:300}
+.h-left{display:flex;align-items:baseline;gap:12px;flex-shrink:0;margin-right:4px}
+header h1{font-family:'IM Fell English SC',serif;font-size:20px;font-weight:400;letter-spacing:.02em;color:var(--ink)}
+.h-tag{font-size:15px;color:var(--ink-mid);font-style:italic}
+.h-pal-group{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.h-spacer{flex:1}
+.h-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .btn{background:none;border:.5px solid var(--border-strong);border-radius:4px;color:var(--ink-mid);cursor:pointer;font-size:13px;padding:4px 9px;font-family:'Crimson Pro',serif;transition:all .12s;white-space:nowrap}
 .btn:hover{color:var(--rust);border-color:var(--rust)}
 .btn.active{background:var(--rust);color:#fff;border-color:var(--rust)}
@@ -57,10 +59,10 @@ header h1{font-family:'IM Fell English SC',serif;font-size:18px;font-weight:400;
 
 /* ── TABLE PANE ── */
 .tpane{flex:1;overflow-y:auto;min-width:0;min-height:0}
-table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
 col.c-sw{width:32px}col.c-nm{width:148px}col.c-pl{width:auto}col.c-tp{width:104px}col.c-h{width:55px}col.c-s{width:52px}col.c-v{width:52px}col.c-lum{width:52px}col.c-hx{width:70px}col.c-la{width:57px}col.c-lo{width:61px}
 thead{position:sticky;top:0;z-index:10;background:var(--bg)}
-th{padding:6px 7px;font-family:'Crimson Pro',serif;font-size:10px;font-weight:400;font-style:italic;color:var(--ink-mid);border-bottom:1px solid var(--border-strong);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;overflow:hidden;transition:color .1s}
+th{padding:6px 7px;font-family:'Crimson Pro',serif;font-size:12px;font-weight:400;font-style:italic;color:var(--ink-mid);border-bottom:1px solid var(--border-strong);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;overflow:hidden;transition:color .1s}
 th:hover{color:var(--rust)}
 .si{opacity:.7;font-style:normal;font-size:9px}
 tbody tr{border-bottom:.5px solid var(--border);cursor:pointer;transition:background .07s}
@@ -70,16 +72,16 @@ tbody tr.sel{background:rgba(139,58,31,.08);border-left:2.5px solid var(--rust)}
 tbody tr.sel td:first-child{padding-left:5.5px}
 td{padding:4px 7px;vertical-align:middle;overflow:hidden;text-overflow:ellipsis}
 .sw{width:19px;height:19px;border-radius:3px;border:.5px solid rgba(0,0,0,.12);display:inline-block;vertical-align:middle}
-.cn{font-weight:600;color:var(--ink);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
-.hx{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-light);display:block}
-.pl{color:var(--ink);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
-.cx{color:var(--ink-light);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-top:1px}
-.co{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;white-space:nowrap}
-.nm{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink);text-align:right;display:block}
+.cn{font-weight:600;color:var(--ink);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.hx{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-light);display:block}
+.pl{color:var(--ink);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.cx{color:var(--ink-light);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-top:1px}
+.co{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-light);text-align:right;white-space:nowrap}
+.nm{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink);text-align:right;display:block}
 .hd{width:9px;height:9px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:3px;border:.5px solid rgba(0,0,0,.18)}
 .bar{height:3px;border-radius:2px;background:var(--border);margin-top:2px;overflow:hidden}
 .bf{height:100%;border-radius:2px}
-.badge{font-size:9.5px;padding:2px 7px;border-radius:20px;font-weight:400;font-family:'Crimson Pro',serif;white-space:nowrap;display:inline-block;border:.5px solid transparent}
+.badge{font-size:10.5px;padding:2px 7px;border-radius:20px;font-weight:400;font-family:'Crimson Pro',serif;white-space:nowrap;display:inline-block;border:.5px solid transparent}
 .b-city{background:#FEF3E2;color:#7A4100;border-color:#F0C060}
 .b-region{background:#EAF3DE;color:#275010;border-color:#9EC45B}
 .b-country{background:#EDF0FC;color:#2D3A8C;border-color:#9BA8E8}
@@ -99,14 +101,14 @@ tbody tr:hover .add-pal{display:inline-block}
 .mi-swatch{height:80px;width:100%;display:flex;align-items:flex-end;text-decoration:none;transition:opacity .15s;position:relative}
 .mi-swatch:hover{opacity:.88}
 .mi-label{padding:5px 8px;background:rgba(0,0,0,.3);width:100%;backdrop-filter:blur(2px)}
-.mi-name{font-family:'IM Fell English SC',serif;font-size:12px;color:#fff;line-height:1.2;letter-spacing:.01em}
-.mi-code{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.75);margin-top:1px}
+.mi-name{font-family:'IM Fell English SC',serif;font-size:13px;color:#fff;line-height:1.2;letter-spacing:.01em}
+.mi-code{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.75);margin-top:1px}
 .mi-body{padding:5px 8px 6px}
-.mi-hsv{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--ink-light)}
-.mi-add{display:block;width:100%;margin-top:4px;padding:3px 0;font-size:10.5px;font-family:'Crimson Pro',serif;border:.5px solid var(--border-strong);border-radius:3px;background:transparent;color:var(--ink-mid);cursor:pointer;transition:all .12s;text-align:center}
+.mi-hsv{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-light)}
+.mi-add{display:block;width:100%;margin-top:4px;padding:3px 0;font-size:11.5px;font-family:'Crimson Pro',serif;border:.5px solid var(--border-strong);border-radius:3px;background:transparent;color:var(--ink-mid);cursor:pointer;transition:all .12s;text-align:center}
 .mi-add:hover{color:var(--rust);border-color:var(--rust)}
 .mi-add:disabled{opacity:.35;cursor:default;pointer-events:none}
-.mi-empty{padding:9px 10px;font-size:11px;color:var(--ink-light);font-style:italic;text-align:center}
+.mi-empty{padding:9px 10px;font-size:12px;color:var(--ink-light);font-style:italic;text-align:center}
 
 /* ── LEAFLET OVERRIDES ── */
 .leaflet-popup-content-wrapper{border-radius:4px!important;border:.5px solid var(--border-strong)!important;font-family:'Crimson Pro',serif!important;background:var(--surface)!important;color:var(--ink)!important}
@@ -122,22 +124,23 @@ tbody tr:hover .add-pal{display:inline-block}
 
 /* ── PALETTE TRAY ── */
 .pal-tray{flex-shrink:0;border-top:1px solid var(--border-strong);background:var(--bg);overflow:hidden;max-height:0;transition:max-height .3s ease}
-.pal-tray.open{max-height:260px}
-.pal-tray-inner{display:flex;flex-direction:column;padding:7px 16px 5px}
+.pal-tray.open{max-height:140px}
+.pal-tray-inner{display:flex;flex-direction:row;align-items:stretch;padding:7px 16px 5px;gap:0}
+.pal-tray-left{flex:1;display:flex;flex-direction:column;min-width:0}
 .pal-chips-row{flex:1;display:flex;align-items:center;gap:7px;overflow-x:auto;min-width:0;padding-bottom:2px}
 .pal-chips-row::-webkit-scrollbar{height:2px}
 .pal-chips-row::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:1px}
-.pal-empty-msg{font-size:13px;color:var(--ink-light);font-style:italic;white-space:nowrap}
-.pal-sort-row{display:flex;align-items:center;gap:5px;flex-shrink:0;padding:3px 0;border-top:.5px solid var(--border);border-bottom:.5px solid var(--border)}
-.pal-sort-label{font-size:12px;color:var(--ink-mid);font-style:italic;white-space:nowrap;flex-shrink:0;margin-right:1px}
-.pal-sort-btn{padding:1px 8px;font-size:12px;font-family:'Crimson Pro',serif;border:.5px solid var(--border-strong);border-radius:20px;background:transparent;color:var(--ink-mid);cursor:pointer;transition:all .12s;white-space:nowrap;flex-shrink:0}
+.pal-empty-msg{font-size:14px;color:var(--ink-light);font-style:italic;white-space:nowrap}
+.pal-combined-row{display:flex;align-items:center;gap:5px;flex-shrink:0;flex-wrap:wrap;padding:3px 0;border-top:.5px solid var(--border)}
+.pal-sort-label{font-size:14px;color:var(--ink-mid);font-style:italic;white-space:nowrap;flex-shrink:0;margin-right:1px}
+.pal-sort-btn{padding:1px 8px;font-size:13px;font-family:'Crimson Pro',serif;border:.5px solid var(--border-strong);border-radius:20px;background:transparent;color:var(--ink-mid);cursor:pointer;transition:all .12s;white-space:nowrap;flex-shrink:0}
 .pal-sort-btn:hover{color:var(--rust);border-color:rgba(139,58,31,.4)}
 .pal-sort-btn.on{background:rgba(139,58,31,.1);color:var(--rust);border-color:var(--rust);font-weight:500}
-.pal-drag-hint{font-size:12px;color:var(--ink-light);font-style:italic;white-space:nowrap;flex-shrink:0;opacity:.7}
-.pal-actions-row{display:flex;align-items:center;gap:5px;flex-shrink:0;padding-top:3px}
-.pal-count{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--ink-light);white-space:nowrap;margin-right:2px}
-.pal-warn{font-size:12px;color:var(--rust);font-style:italic;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.pal-btn{padding:2px 8px;font-size:12px;font-family:'Crimson Pro',serif;border:.5px solid var(--border-strong);border-radius:4px;background:transparent;color:var(--ink-mid);cursor:pointer;transition:all .12s;white-space:nowrap;flex-shrink:0}
+.pal-drag-hint{font-size:14px;color:var(--ink-light);font-style:italic;white-space:nowrap;flex-shrink:0;opacity:.7}
+.pal-row-div{width:.5px;height:14px;background:var(--border-strong);flex-shrink:0;margin:0 4px}
+.pal-count{font-size:13px;font-family:'JetBrains Mono',monospace;color:var(--ink-light);white-space:nowrap;margin-right:2px}
+.pal-warn{font-size:13px;color:var(--rust);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
+.pal-btn{padding:2px 8px;font-size:13px;font-family:'Crimson Pro',serif;border:.5px solid var(--border-strong);border-radius:4px;background:transparent;color:var(--ink-mid);cursor:pointer;transition:all .12s;white-space:nowrap;flex-shrink:0}
 .pal-btn:hover{color:var(--rust);border-color:var(--rust)}
 .pal-btn.primary{background:var(--rust);color:#fff;border-color:var(--rust)}
 .pal-btn.primary:hover{opacity:.88}
@@ -147,13 +150,23 @@ tbody tr:hover .add-pal{display:inline-block}
 .pal-chip-drop-left{border-left:2px solid var(--rust)!important}
 .pal-chip-drop-right{border-right:2px solid var(--rust)!important}
 
-/* ── RAMP SECTION ── */
-.ramp-section{border-top:.5px solid var(--border);padding-top:5px;margin-top:3px;flex-shrink:0}
-.ramp-ctrl-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:5px}
-.ramp-steps-sel{font-size:12px;font-family:'Crimson Pro',serif;border:.5px solid var(--border-strong);border-radius:3px;background:var(--surface);color:var(--ink);padding:1px 5px;outline:none;cursor:pointer;transition:border-color .12s}
+/* ── RAMP COLUMN (right side of tray) ── */
+#rampCol{width:420px;flex-shrink:0;display:flex;flex-direction:column;gap:5px;border-left:.5px solid var(--border);padding-left:12px;margin-left:12px}
+.ramp-top-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.ramp-steps-sel{font-size:13px;font-family:'Crimson Pro',serif;border:.5px solid var(--border-strong);border-radius:3px;background:var(--surface);color:var(--ink);padding:1px 5px;outline:none;cursor:pointer;transition:border-color .12s}
 .ramp-steps-sel:focus{border-color:var(--rust)}
-.ramp-hint{font-size:11px;color:var(--ink-light);font-style:italic;white-space:nowrap;margin-left:2px}
-#rampCanvas{width:100%;height:28px;border-radius:3px;border:.5px solid var(--border-strong);display:block}
+.ramp-hint{font-size:12px;color:var(--ink-light);font-style:italic;white-space:nowrap}
+#rampCanvas{width:100%;flex:1;min-height:22px;border-radius:3px;border:.5px solid var(--border-strong);display:block}
+.ramp-export-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;flex-shrink:0}
+
+/* ── HELP DRAWER ── */
+.help-drawer{flex-shrink:0;overflow:hidden;max-height:0;transition:max-height .32s ease;border-top:none;background:var(--bg)}
+.help-drawer.open{max-height:210px;border-top:1px solid var(--border-strong)}
+.help-inner{padding:13px 20px 11px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;max-height:210px;overflow-y:auto}
+.hi-title{font-family:'IM Fell English SC',serif;font-size:13px;font-weight:400;color:var(--rust);letter-spacing:.05em;margin-bottom:5px}
+.hi-text{font-size:12.5px;color:var(--ink-mid);line-height:1.65}
+.hi-text strong{color:var(--ink);font-weight:600}
+.hi-text kbd{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--surface);border:.5px solid var(--border-strong);border-radius:3px;padding:0 4px}
 
 /* ── CREDITS DRAWER ── */
 .credits-drawer{flex-shrink:0;overflow:hidden;max-height:0;transition:max-height .32s ease;border-top:none;background:var(--bg)}
@@ -173,10 +186,10 @@ tbody tr:hover .add-pal{display:inline-block}
 .fb-stat b{color:var(--rust);font-weight:500}
 .fb-sep{width:.5px;height:12px;background:var(--border);flex-shrink:0}
 .fb-spacer{flex:1}
-.fb-cred{font-size:13px;color:var(--ink-mid);cursor:pointer;border:none;background:none;font-family:'Crimson Pro',serif;font-style:italic;padding:0;transition:color .12s;white-space:nowrap}
+.fb-cred{font-size:14px;color:var(--ink-mid);cursor:pointer;border:none;background:none;font-family:'Crimson Pro',serif;font-style:italic;padding:0;transition:color .12s;white-space:nowrap}
 .fb-cred:hover{color:var(--rust)}
 .fb-cred.open{color:var(--rust)}
-.fb-attr{font-size:12px;color:var(--ink-light);font-style:italic;white-space:nowrap}
+.fb-attr{font-size:13px;color:var(--ink-light);font-style:italic;white-space:nowrap}
 .fb-attr a{color:var(--ink-mid);text-decoration:none;border-bottom:.5px solid var(--border)}
 .fb-attr a:hover{color:var(--rust)}
 
@@ -188,6 +201,7 @@ tbody tr:hover .add-pal{display:inline-block}
   .drag-handle{display:none}
   .tpane{overflow-y:visible;height:auto}
   .credits-inner{grid-template-columns:1fr}
+  .help-inner{grid-template-columns:1fr 1fr}
   .h-tag{display:none}
   table{table-layout:auto}
   body{overflow:auto}
@@ -197,7 +211,7 @@ tbody tr:hover .add-pal{display:inline-block}
 @media print{
   *{transition:none!important;overflow:visible!important}
   html,body{overflow:visible;height:auto}
-  .h-right,.controls,.map-pane,.drag-handle,.pal-tray,.footer-bar{display:none!important}
+  .h-right,.controls,.map-pane,.drag-handle,.pal-tray,.footer-bar,.help-drawer{display:none!important}
   .credits-drawer{max-height:none!important;border-top:none;display:block}
   .credits-inner{display:block;padding:8pt 0 0}
   .cr-title{font-size:8pt;color:#333!important}
@@ -223,12 +237,16 @@ tbody tr:hover .add-pal{display:inline-block}
 
 <header>
   <div class="h-left">
-    <h1>Colours of the World</h1>
-    <span class="h-tag">A colour map and Earth palette generator</span>
+    <h1>Earth Colours</h1>
+    <span class="h-tag">An interactive colour map and Earth palette generator</span>
   </div>
+  <div class="h-pal-group">
+    <button class="btn" id="palBtn" onclick="togglePalette()">&#x25A3; Create Earth Colour Palette</button>
+    <button class="btn" onclick="toggleHelp()" id="helpBtn">Instructions</button>
+  </div>
+  <span style="font-size:12px;color:var(--ink-light);font-family:'JetBrains Mono',monospace;flex-shrink:0" id="hcnt"></span>
+  <div class="h-spacer"></div>
   <div class="h-right">
-    <span style="font-size:12px;color:var(--ink-light);font-family:'JetBrains Mono',monospace;margin-right:3px" id="hcnt"></span>
-    <button class="btn" id="palBtn" onclick="togglePalette()">&#x25A3; Create Earth Palette</button>
     <button class="btn" onclick="exportCSV()" title="Export current view as CSV">&#x2193; CSV</button>
     <button class="btn" onclick="toggleTheme()" id="themeBtn">&#x25D1; Dark</button>
     <button class="btn" onclick="window.print()">&#x2399; Print</button>
@@ -252,6 +270,28 @@ tbody tr:hover .add-pal{display:inline-block}
   <span class="chip" id="chip-val" onclick="setSrt('v',-1)">Brightness</span>
   <span class="chip" id="chip-la" onclick="setSrt('la',1)">N&#x2192;S</span>
   <span class="chip" id="chip-lo" onclick="setSrt('lo',1)">W&#x2192;E</span>
+</div>
+
+<!-- HELP DRAWER -->
+<div class="help-drawer" id="helpDrawer">
+  <div class="help-inner">
+    <div>
+      <div class="hi-title">Building a Palette</div>
+      <p class="hi-text">Hover any table row and click <strong>+</strong> to add a colour. Or click a map marker, then use <strong>+ Add to palette</strong> in the info panel. The tray opens automatically along the bottom of the screen.<br><br>Drag chips to reorder. Use the <strong>Sort</strong> buttons to arrange by hue, saturation, brightness, or luminance. Hover a chip to reveal the <strong>&times;</strong> remove button. <strong>Clear</strong> empties the palette.</p>
+    </div>
+    <div>
+      <div class="hi-title">Colour Ramp Generator</div>
+      <p class="hi-text">Add at least <strong>2 colours</strong> to the palette — a ramp preview appears on the right side of the tray. The ramp interpolates through <strong>CIELAB colour space</strong>, which matches human perception better than RGB for cartographic gradients.<br><br>Choose 3–11 steps. Export as <strong>Hex/CSV</strong> for any software, <strong>PNG strip</strong> for image use, <strong>QGIS XML</strong> to import directly as a QGIS colour ramp, or <strong>CSS gradient</strong> for web maps.</p>
+    </div>
+    <div>
+      <div class="hi-title">Table &amp; Filtering</div>
+      <p class="hi-text">Click any <strong>column header</strong> to sort — click again to reverse. Use the <strong>search box</strong> to filter by colour name, place, or hex value. The <strong>filter chips</strong> narrow results by geographic category (city, region, country, water, landform).<br><br>The <strong>&#x2195; drag handle</strong> between map and table resizes both panes. <strong>&#x2193; CSV</strong> (header) exports the current filtered and sorted view.</p>
+    </div>
+    <div>
+      <div class="hi-title">Map Interaction</div>
+      <p class="hi-text">Click any <strong>map marker</strong> to see the colour's name, hex code, and HSV values in the info panel (bottom-left). Use <strong>+ Add to palette</strong> there to add it without leaving the map.<br><br>Clicking a <strong>table row</strong> pans and zooms the map to that location and highlights the marker. Zoom and pan normally with scroll and drag. Switch to <strong>Dark</strong> mode for a dark basemap.</p>
+    </div>
+  </div>
 </div>
 
 <div class="main" id="mainPane">
@@ -281,27 +321,30 @@ tbody tr:hover .add-pal{display:inline-block}
 <!-- PALETTE TRAY -->
 <div class="pal-tray" id="palTray">
   <div class="pal-tray-inner">
-    <div class="pal-chips-row" id="palChips">
-      <span class="pal-empty-msg" id="palEmpty">No colours added yet — hover any table row and click + to add</span>
+    <!-- LEFT: chips + combined sort/action row -->
+    <div class="pal-tray-left">
+      <div class="pal-chips-row" id="palChips">
+        <span class="pal-empty-msg" id="palEmpty">No colours added yet — hover any table row and click + to add</span>
+      </div>
+      <div class="pal-combined-row">
+        <span class="pal-drag-hint">&#x2195; drag to reorder</span>
+        <span class="pal-sort-label">Sort:</span>
+        <button class="pal-sort-btn" id="psb-h" onclick="sortPalette('h')">Hue</button>
+        <button class="pal-sort-btn" id="psb-s" onclick="sortPalette('s')">Saturation</button>
+        <button class="pal-sort-btn" id="psb-v" onclick="sortPalette('v')">Brightness</button>
+        <button class="pal-sort-btn" id="psb-lum" onclick="sortPalette('lum')">Luminance</button>
+        <div class="pal-row-div"></div>
+        <span class="pal-count" id="palCount"></span>
+        <span class="pal-warn" id="palWarn"></span>
+        <button class="pal-btn" onclick="clearPalette()">Clear</button>
+        <button class="pal-btn" onclick="exportPaletteCSV()" id="palCSVBtn" disabled>&#x2193; CSV</button>
+        <button class="pal-btn" onclick="downloadPNG()" id="palPNGBtn" disabled>&#x2193; PNG strip</button>
+        <button class="pal-btn primary" id="palTinBtn" onclick="openTineye()" disabled>Palette image search MultiColr &#x2197;</button>
+      </div>
     </div>
-    <div class="pal-sort-row">
-      <span class="pal-drag-hint">&#x2195; drag to reorder</span>
-      <span class="pal-sort-label">Sort colours:</span>
-      <button class="pal-sort-btn" id="psb-h" onclick="sortPalette('h')">Hue</button>
-      <button class="pal-sort-btn" id="psb-s" onclick="sortPalette('s')">Saturation</button>
-      <button class="pal-sort-btn" id="psb-v" onclick="sortPalette('v')">Brightness</button>
-      <button class="pal-sort-btn" id="psb-lum" onclick="sortPalette('lum')">Luminance</button>
-    </div>
-    <div class="pal-actions-row">
-      <span class="pal-count" id="palCount"></span>
-      <span class="pal-warn" id="palWarn"></span>
-      <button class="pal-btn" onclick="clearPalette()">Clear</button>
-      <button class="pal-btn" onclick="exportPaletteCSV()" id="palCSVBtn" disabled>&#x2193; CSV</button>
-      <button class="pal-btn" onclick="downloadPNG()" id="palPNGBtn" disabled>&#x2193; PNG strip</button>
-      <button class="pal-btn primary" id="palTinBtn" onclick="openTineye()" disabled>Palette image search with TinEye MultiColr &#x2197;</button>
-    </div>
-    <div class="ramp-section" id="rampSection" style="display:none">
-      <div class="ramp-ctrl-row">
+    <!-- RIGHT: colour ramp (visible when palette ≥ 2 colours) -->
+    <div id="rampCol" style="display:none">
+      <div class="ramp-top-row">
         <span class="pal-sort-label">Colour ramp (LAB):</span>
         <select id="rampSteps" class="ramp-steps-sel" onchange="updateRamp()">
           <option value="3">3 classes</option>
@@ -310,13 +353,15 @@ tbody tr:hover .add-pal{display:inline-block}
           <option value="9">9 classes</option>
           <option value="11">11 classes</option>
         </select>
-        <span class="ramp-hint">LAB interpolation &middot; uses palette order</span>
-        <button class="pal-btn" onclick="exportRampCSV()">&#x2193; Hex/CSV</button>
+        <span class="ramp-hint">LAB interpolation &middot; palette order</span>
+      </div>
+      <canvas id="rampCanvas"></canvas>
+      <div class="ramp-export-row">
+        <button class="pal-btn" onclick="exportRampCSV()">&#x2193; CSV</button>
         <button class="pal-btn" onclick="downloadRampPNG()">&#x2193; PNG</button>
         <button class="pal-btn" onclick="exportRampQGIS()">&#x2193; QGIS XML</button>
         <button class="pal-btn" onclick="exportRampCSS()">&#x2193; CSS</button>
       </div>
-      <canvas id="rampCanvas"></canvas>
     </div>
   </div>
 </div>
@@ -613,6 +658,16 @@ function toggleTheme(){
 }
 
 /* ── CREDITS DRAWER ── */
+let helpOpen=false;
+function toggleHelp(){
+  helpOpen=!helpOpen;
+  document.getElementById('helpDrawer').classList.toggle('open',helpOpen);
+  const btn=document.getElementById('helpBtn');
+  btn.classList.toggle('active',helpOpen);
+  btn.textContent=helpOpen?'\u00D7 Close help':'? How to use';
+  setTimeout(()=>map.invalidateSize(),350);
+}
+
 let credOpen=false;
 function toggleCredits(){
   credOpen=!credOpen;
@@ -913,12 +968,8 @@ function renderPalette(){
   empty.style.display='none';
   cnt.textContent=palette.length+(palette.length===1?' colour':' colours');
   csvBtn.disabled=false;pngBtn.disabled=false;
-  if(palette.length>5){
-    warn.textContent='TinEye MultiColr supports max 5 colours — remove some to enable';
-    tinBtn.disabled=true;
-  } else {
-    warn.textContent='';tinBtn.disabled=false;
-  }
+  warn.textContent='';
+  tinBtn.disabled=palette.length>5;
 
   palette.forEach((p,i)=>{
     const wrap=document.createElement('div');
@@ -1021,7 +1072,7 @@ function buildRamp(pal,n){
   });
 }
 function updateRamp(){
-  const sec=document.getElementById('rampSection');
+  const sec=document.getElementById('rampCol');
   const canvas=document.getElementById('rampCanvas');
   if(!sec||!canvas)return;
   if(palette.length<2){sec.style.display='none';return;}
@@ -1036,8 +1087,12 @@ function updateRamp(){
 function exportRampCSV(){
   if(palette.length<2)return;
   const ramp=buildRamp(palette,parseInt(document.getElementById('rampSteps').value));
-  const hdr=['Step','Hex','R','G','B'];
-  const rows=ramp.map((h,i)=>[i+1,h,parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]);
+  const hdr=['Step','Hex','R','G','B','H (deg)','S (%)','V (%)'];
+  const rows=ramp.map((h,i)=>{
+    const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);
+    const[hv,s,v]=hsv(h);
+    return[i+1,h,r,g,b,hv,s,v];
+  });
   const csv=[hdr,...rows].map(r=>r.join(',')).join('\r\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download='colour-ramp-'+ramp.length+'steps.csv';a.click();URL.revokeObjectURL(a.href);
