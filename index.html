@@ -163,8 +163,8 @@ tbody tr:hover .add-pal{display:inline-block}
 
 /* ── HELP DRAWER ── */
 .help-drawer{flex-shrink:0;overflow:hidden;max-height:0;transition:max-height .32s ease;border-top:none;background:var(--bg)}
-.help-drawer.open{max-height:210px;border-top:1px solid var(--border-strong)}
-.help-inner{padding:13px 20px 11px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;max-height:210px;overflow-y:auto}
+.help-drawer.open{max-height:250px;border-top:1px solid var(--border-strong)}
+.help-inner{padding:13px 20px 11px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;max-height:250px;overflow-y:auto}
 .hi-title{font-family:'IM Fell English SC',serif;font-size:13px;font-weight:400;color:var(--rust);letter-spacing:.05em;margin-bottom:5px}
 .hi-text{font-size:12.5px;color:var(--ink-mid);line-height:1.65}
 .hi-text strong{color:var(--ink);font-weight:600}
@@ -283,20 +283,20 @@ tbody tr:hover .add-pal{display:inline-block}
 <div class="help-drawer" id="helpDrawer">
   <div class="help-inner">
     <div>
+      <div class="hi-title">About this site</div>
+      <p class="hi-text"><em>Earth Colours</em> is a geographical colour reference for 234 named colours whose identities are rooted in place. Browse the full list, search by name or hex value, filter by type, and follow each colour back to its corner of the world on the map.<br>For cartographers and designers, the <strong>Earth Palette</strong> tool lets you assemble colours from the collection and build perceptually smooth <strong>colour gradients</strong> ready to export.</p>
+    </div>
+    <div>
+      <div class="hi-title">Geography in colour</div>
+      <p class="hi-text">Colour names have always carried geography. Some are straightforwardly locational, such as <strong>Sienna</strong> from Tuscany&#x2019;s iron-rich soils, <strong>Prussian Blue</strong> from Berlin&#x2019;s 18th-century dye trade, or <strong>Venetian Red</strong> from ochre deposits traded through Mediterranean ports. Others trace to the raw materials that made them, e.g. <strong>Lapis Lazuli</strong> from Afghan mines worked for millennia, <strong>Indigo</strong> from dye plants across the Indian subcontinent, <strong>Carmine</strong> from cochineal insects harvested in Mesoamerica. A third group are historical and contemporary landscape impressions, including stylized readings of savanna, glacier, or tropical sea. And some, like <strong>Tyrian Purple</strong> or <strong>Vermilion</strong>, are inseparable from the ancient trade routes that once made them priceless.</p>
+    </div>
+    <div>
       <div class="hi-title">Create an Earth Colour Palette</div>
       <p class="hi-text">Create a colour palette using named geographic colours. Hover any table row and click <strong>+</strong> to add a colour. Or click a map marker, then use <strong>+ Add to palette</strong> in the info panel. The tray opens automatically along the bottom of the screen.<br><br>Drag chips to reorder. Use the <strong>Sort</strong> buttons to arrange by hue, saturation, brightness, or luminance. Hover a chip to reveal the <strong>&times;</strong> remove button. <strong>Clear</strong> empties the palette.</p>
     </div>
     <div>
       <div class="hi-title">Cartographic Colour Ramp Generator</div>
-      <p class="hi-text">Create map colour gradients. Add desired colours to palette, at least <strong>2</strong> for a sequential colour scheme (e.g. 'high' to 'low'), <strong>3</strong> for diverging (e.g. 'hot', 'cold', 'neutral'). The ramp can interpolate additional classes through the <strong>CIELAB colour space</strong>, which matches human perception well for cartographic gradients.<br>Choose 3–11 classes, export as <strong>Hex/RGB/HSV</strong> for any software, <strong>PNG</strong> for image use, <strong>QGIS XML</strong> to import directly as a QGIS colour ramp, or <strong>CSS gradient</strong> for web maps.</p>
-    </div>
-    <div>
-      <div class="hi-title">Table &amp; Filtering</div>
-      <p class="hi-text">Click any <strong>column header</strong> to sort — click again to reverse. Use the <strong>search box</strong> to filter by colour name, place, or hex value. The <strong>filter chips</strong> narrow results by geographic category (city, region, country, water, landform).<br>The <strong>&#x2195; drag handle</strong> between map and table resizes both panes. <strong>&#x2193; CSV</strong> (header) exports the current filtered and sorted view.</p>
-    </div>
-    <div>
-      <div class="hi-title">Map Interaction</div>
-      <p class="hi-text">Click any <strong>map marker</strong> to see the colour's name, hex code, and HSV values in the info panel (bottom-left). Use <strong>+ Add to palette</strong> there to add it without leaving the map.<br><br>Clicking a <strong>table row</strong> pans and zooms the map to that location and highlights the marker. Zoom and pan normally with scroll and drag. Switch to <strong>Dark</strong> mode for a dark basemap.</p>
+      <p class="hi-text">Create map colour gradients. Add desired colours to palette — at least <strong>2</strong> for a sequential colour scheme (e.g. &#x2018;high&#x2019; to &#x2018;low&#x2019;), <strong>3</strong> for diverging (e.g. &#x2018;hot&#x2019;, &#x2018;cold&#x2019;, &#x2018;neutral&#x2019;). The ramp interpolates additional classes through <strong>CIELAB colour space</strong>, which matches human perception well for cartographic gradients. Choose 3&#x2013;11 classes. Export as <strong>CSV</strong> (hex, RGB, HSV per step), <strong>PNG</strong> for image use, <strong>QGIS XML</strong> to import directly as a colour ramp, or <strong>CSS gradient</strong> for web maps.</p>
     </div>
   </div>
 </div>
@@ -630,7 +630,10 @@ const RAW=[
 ["Patagonian Steppe","#9C7A3C","Patagonian Steppe","South America","landform",-47.00,-70.00],
 ["Sahel Brown","#9C7A3C","Sahel","West Africa","landform",14.20,-2.00],
 ["Siberian Taiga","#2D6A4F","Siberian Taiga","Russia","landform",58.00,80.00],
-["Pampas Green","#5A8A50","Pampas","Argentina","landform",-34.00,-62.00]
+["Pampas Green","#5A8A50","Pampas","Argentina","landform",-34.00,-62.00],
+["Lapis Lazuli","#26619C","Badakhshan","Afghanistan","region",36.70,71.30],
+["Carmine","#960018","Oaxaca","Mexico","region",17.07,-96.73],
+["Vermilion","#E34234","Almadén","Castilla-La Mancha, Spain","city",38.77,-4.83]
 ];
 
 /* ── HSV ── */
